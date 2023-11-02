@@ -1,0 +1,24 @@
+{
+  "name": "habittracker",
+  "version": "1.0.0",
+  "description": "A fullstack app for tracking the habits",
+  "main": "yes",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "whiteWolf",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.0.3",
+    "nodemon": "^2.0.22",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

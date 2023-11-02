@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/css/sign.css"> 
+<!-- The design and stling is same for singIn/singUp/forgetPassword -->
+<div class="outerform">
+    <div class="input-form">
+        <div class="heading"><h1>Welcome</h1></div>
+        <div class="quotes">
+            <quotes>
+                Small process makes a person big
+            </quotes>
+        </div>
+        
+        <div class="formClass">
+            <form method="post" action="/users/create-session" >
+                <input type="email" name="email" placeholder="Enter email" required><br>
+                <input type="password" name="password" placeholder="Enter password" required><br>
+                
+                <div class= 'buttons'>
+                    <div class="forgetPassword"><a href="/users/forgetPassword"> ForgetPassword </a></div>
+                    <div class = 'submitButtons'><button type="submit">Sign In</button></div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

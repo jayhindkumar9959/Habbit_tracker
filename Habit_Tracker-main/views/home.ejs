@@ -1,0 +1,137 @@
+<script src="https://kit.fontawesome.com/6866a8ccc0.js" crossorigin="anonymous"></script>
+<!-- If you try to acces home page, then you can't acces, until you are logged in, I have 
+    checked the condiions for that. If you are logged In , then you can albe to see your activieted ,
+    have been doing . -->
+<% if(locals.user) {%>
+    <body>
+        <!-- Just a randome quotes -->
+        <div class="qutos">
+            <h1>“Successful habit makes people Successful”</h1>
+            <p>Start with a new habit today !</p>
+        </div>
+        <!-- For the input which allow the user to enter habits -->
+        <div id="input">
+            <form action="/users/habit/createHabit" method="POST" class="input-form">
+                <input name="habit" type="text" placeholder="Enter your habit..." required>
+                <button type="submit" id="form-btn">+ Add Habits</button>
+            </form>
+        </div>
+        <!-- These will tell the user that , which symbol indicate what -->
+        <div id="symbol">
+            <i class="fas fa-check-circle"></i>
+           -Done&emsp;&emsp;
+           <i class="fas fa-times-circle"></i>
+           -Not Done&emsp;&emsp;
+           <i class="fas fa-minus-circle"></i>
+           -Unmarked&emsp;&emsp;
+           <button id="weekly-view__btn-2" onclick="showDailyData()">Daily</button>
+           <button id="weekly-view__btn" onclick="showWeeklyData()">weekly</button>
+        </div>
+
+        <!-- From here habit and its contains start, it basically fetches data form habit, which is passed 
+        in the home_controller. -->
+         <div class="habit-display_width">
+            <ul class="habit-list">
+                <li class="with-weekly">
+                   
+                    <% for(let habit of habits) {%>
+                        <div class="habit-list-item">
+
+                            <%let currentDate = new Date();
+                            let dd = currentDate.getDate();
+                            let mm = currentDate.getMonth() + 1;
+                            const yyyy = currentDate.getFullYear();
+                            if (dd < 10) dd = '0' + dd;
+                            if (mm < 10) mm = '0' + mm;
+                            let today = dd + '/' + mm + '/' + yyyy;
+                            let found;
+                            let status;
+                            habit.dates.find((item) => {
+                                            if(item.date === today)
+                                            {
+                                                found = true;
+                                                status = item.complete;
+                                            }
+                                        });
+                            %>
+                            <!-- For toggling the status of the habits -->
+                            <a href="/users/habit/toggleStatus/?id=<%= habit._id%>&date=<%= today %>" class="status">
+                                <!-- <i class="fas fa-check-circle"></i> -->
+
+                                <% if(found && status==='yes'){ %>
+                                    <i class="fas fa-check-circle"></i>
+                                    <% } else if(found && status==='no'){ %>
+                                    <i class="fas fa-times-circle"></i>
+                                    <% } else { %>
+                                    <i class="fas fa-minus-circle"></i>
+                                    <% } %>
+                                
+                            </a>
+                            <!-- Habit content -->
+                            <div class="habit-list-item-name"> <%=habit.content%> </div>
+                            <!-- For toggling the habit to favourites -->
+                            <div >
+                                <a href="/users/habit/favorite/?id=<%= habit._id%>" class="favorite">
+                                    
+                                    <% if(habit.favorite) {%>
+                                        <i class="fa-solid fa-star"></i>
+                                    <%} else {%>
+                                        <i class="fa-regular fa-star"></i>
+                                    <%}%>      
+                                    
+                                </a>
+                                <!-- For remving the habits -->
+                                <a href="/users/habit/remove/?id=<%= habit._id %>" class="remove">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+    
+                       </div>
+                       <!-- this is the list of dates -->
+                       <div class="weekly__container">
+                            <% for(let d of weeklyDates){ %>
+                                <div class="weekly__date">
+                                    <p> <%= d%> </p>
+
+                                    <% 
+                                        let find;
+                                        let stat;
+                                        habit.dates.find((item) => {
+                                            if(item.date === d)
+                                            {
+                                                find = true;
+                                                stat = item.complete;
+                                            }
+                                        });
+                                    %>
+                                        <!-- Provided the day wise method for checking of the habits  -->
+                                    <a href="/users/habit/toggleStatus/?id=<%= habit._id%>&date=<%=d%>" class="status">
+                                        <!-- <i class="fas fa-minus-circle"></i> -->
+                                        <% if(find && stat==='yes'){ %>
+                                                <i class="fas fa-check-circle"></i>
+                                            <% } else if(find && stat==='no'){ %>
+                                                <i class="fas fa-times-circle"></i>
+                                            <% } else { %>
+                                                <i class="fas fa-minus-circle"></i>
+                                        <% } %>
+                                    </a>
+                                </div>
+                            <%}%>    
+                        
+                        </div>
+
+                    <%}%>
+
+
+                </li>
+            </ul>
+         </div>
+    
+    </body>
+<%}%>
+
+
+
+
+
+ <script src="/js/script.js"></script>
